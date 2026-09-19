@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NovaForge — Build. Test. Upgrade. Invent.</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #07111f;
+  color: #f5f7fa;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(7,17,31,.95);
+  border-bottom: 1px solid #24364d;
+  padding: 18px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  color: #ff8a00;
+}
+
+.logo span {
+  color: #4db8ff;
+}
+
+nav a {
+  color: #dbe7f5;
+  text-decoration: none;
+  margin-left: 25px;
+}
+
+nav a:hover {
+  color: #ff8a00;
+}
+
+.hero {
+  min-height: 620px;
+  padding: 90px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  background:
+    radial-gradient(circle at 80% 40%, #12365a 0%, transparent 35%),
+    #07111f;
+}
+
+.hero-text {
+  max-width: 650px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 8px 13px;
+  border: 1px solid #ff8a00;
+  border-radius: 30px;
+  color: #ff9f2f;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: clamp(55px, 8vw, 100px);
+  line-height: .9;
+  margin-bottom: 25px;
+}
+
+h1 span {
+  color: #ff8a00;
+}
+
+.hero p {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #b9c9da;
+  margin-bottom: 30px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+button,
+.button {
+  border: none;
+  padding: 15px 22px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.primary {
+  background: #ff8a00;
+  color: #07111f;
+}
+
+.primary:hover {
+  background: #ffad42;
+}
+
+.secondary {
+  background: transparent;
+  color: white;
+  border: 1px solid #49627c;
+}
+
+.secondary:hover {
+  border-color: #4db8ff;
+}
+
+.machine {
+  width: 330px;
+  height: 330px;
+  border-radius: 50%;
+  border: 3px dashed #ff8a00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  animation: spin 18s linear infinite;
+}
+
+.machine::before {
+  content: "⚙";
+  font-size: 150px;
+  color: #4db8ff;
+  animation: spinBack 18s linear infinite;
+}
+
+.machine::after {
+  content: "N";
+  position: absolute;
+  font-size: 80px;
+  font-weight: 900;
+  color: #ff8a00;
+  animation: spinBack 18s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinBack {
+  to { transform: rotate(-360deg); }
+}
+
+section {
+  padding: 90px 7%;
+}
+
+.section-title {
+  font-size: 45px;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  color: #9eb1c6;
+  margin-bottom: 40px;
+  font-size: 18px;
+}
+
+.boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: #0c1b2d;
+  border: 1px solid #263d57;
+  border-radius: 18px;
+  padding: 25px;
+  transition: .25s;
+}
+
+.card:hover {
+  transform: translateY(-7px);
+  border-color: #ff8a00;
+}
+
+.number {
+  color: #4db8ff;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.card h3 {
+  font-size: 25px;
+  margin: 12px 0;
+}
+
+.card p {
+  color: #a9b9ca;
+  line-height: 1.5;
+  min-height: 70px;
+}
+
+.price {
+  color: #ff9f2f;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.step {
+  padding: 30px;
+  background: linear-gradient(145deg, #0d2137, #091525);
+  border-radius: 18px;
+  border: 1px solid #29445f;
+}
+
+.step-number {
+  font-size: 45px;
+  font-weight: 900;
+  color: #ff8a00;
+}
+
+.step h3 {
+  margin: 12px 0;
+  font-size: 24px;
+}
+
+.step p {
+  color: #a9b9ca;
+  line-height: 1.5;
+}
+
+.levels {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.level {
+  flex: 1 1 150px;
+  padding: 22px;
+  background: #0c1b2d;
+  border: 1px solid #29445f;
+  border-radius: 15px;
+}
+
+.level strong {
+  display: block;
+  color: #ff8a00;
+  margin-bottom: 7px;
+}
+
+.cta {
+  margin: 40px 7% 90px;
+  padding: 55px;
+  border-radius: 25px;
+  background: linear-gradient(120deg, #ff8a00, #ffb84d);
+  color: #07111f;
+  text-align: center;
+}
+
+.cta h2 {
+  font-size: 45px;
+  margin-bottom: 12px;
+}
+
+.cta p {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.cta button {
+  background: #07111f;
+  color: white;
+}
+
+footer {
+  padding: 30px 7%;
+  border-top: 1px solid #24364d;
+  color: #71859a;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: #0d1c2f;
+  border: 1px solid #ff8a00;
+  border-radius: 20px;
+  padding: 35px;
+  width: min(90%, 450px);
+  text-align: center;
+}
+
+.modal-box h2 {
+  margin-bottom: 12px;
+}
+
+.modal-box p {
+  color: #a9b9ca;
+  margin-bottom: 20px;
+}
+
+.modal-box input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #415b76;
+  background: #07111f;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.close {
+  background: transparent;
+  color: #aaa;
+  margin-top: 10px;
+}
+
+@media(max-width: 750px) {
+  nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  nav a {
+    margin: 0 8px;
+  }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .machine {
+    width: 250px;
+    height: 250px;
+  }
+
+  .cta {
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">NOVA<span>FORGE</span></div>
+
+  <div>
+    <a href="#boxes">Build Boxes</a>
+    <a href="#how">How It Works</a>
+    <a href="#levels">Forge Levels</a>
+  </div>
+</nav>
+
+<section class="hero">
+
+  <div class="hero-text">
+
+    <div class="tag">THE HANDS-ON ENGINEERING CLUB</div>
+
+    <h1>
+      Build.<br>
+      Test.<br>
+      <span>Invent.</span>
+    </h1>
+
+    <p>
+      NovaForge sends you real engineering challenges,
+      buildable projects, experiments, upgrades, and missions.
+      Don't just learn how things work — build them.
+    </p>
+
+    <div class="buttons">
+      <a class="button primary" href="#boxes">Explore the boxes →</a>
+      <a class="button secondary" href="#how">See how it works</a>
+    </div>
+
+  </div>
+
+  <div class="machine"></div>
+
+</section>
+
+
+<section id="boxes">
+
+  <h2 class="section-title">Build Boxes</h2>
+
+  <p class="section-subtitle">
+    Every box gives you a new machine to build, test, and upgrade.
+  </p>
+
+  <div class="boxes">
+
+    <div class="card">
+      <div class="number">BOX 01</div>
+      <h3>🚀 LaunchLab</h3>
+      <p>Build a mechanical launcher and experiment with distance, angles, and power.</p>
+      <div class="price">$24.99</div>
+    </div>
+
+    <div class="card">
+      <div class="number">BOX 02</div>
+      <h3>🏎️ Speed Machine</h3>
+      <p>Build a fast rubber-band powered vehicle and tune it for maximum speed.</p>
+      <div class="price">$24.99</div>
+    </div>
+
+    <div class="card">
+      <div class="number">BOX 03</div>
+      <h3>🏗️ MegaLift</h3>
+      <p>Engineer a working crane and discover how gears and leverage move heavy loads.</p>
+      <div class="price">$27.99</div>
+    </div>
+
+    <div class="card">
+      <div class="number">BOX 04</div>
+      <h3>⚙️ GearStorm</h3>
+      <p>Create a gear-powered machine and experiment with speed and torque.</p>
+      <div class="price">$24.99</div>
+    </div>
+
+    <div class="card">
+      <div class="number">BOX 05</div>
+      <h3>💨 AirDrive</h3>
+      <p>Build an air-powered vehicle and investigate thrust, drag, and motion.</p>
+      <div class="price">$26.99</div>
+    </div>
+
+    <div class="card">
+      <div class="number">BOX 06</div>
+      <h3>🌉 BridgeWorks</h3>
+      <p>Design and test a bridge that can carry surprising amounts of weight.</p>
+      <div class="price">$26.99</div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section id="how">
+
+  <h2 class="section-title">How It Works</h2>
+
+  <p class="section-subtitle">
+    Every NovaForge project follows the Forge Method.
+  </p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-number">01</div>
+      <h3>BUILD</h3>
+      <p>Follow the engineering guide and turn a pile of parts into a working machine.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">02</div>
+      <h3>TEST</h3>
+      <p>Run experiments and discover what makes your machine work better.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">03</div>
+      <h3>UPGRADE</h3>
+      <p>Modify your creation and complete special engineering challenges.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">04</div>
+      <h3>INVENT</h3>
+      <p>Use what you learned to create something completely your own.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section id="levels">
+
+  <h2 class="section-title">Forge Levels</h2>
+
+  <p class="section-subtitle">
+    Complete builds and challenges to level up your engineering skills.
+  </p>
+
+  <div class="levels">
+
+    <div class="level">
+      <strong>LEVEL 1</strong>
+      Builder
+    </div>
+
+    <div class="level">
+      <strong>LEVEL 2</strong>
+      Tinkerer
+    </div>
+
+    <div class="level">
+      <strong>LEVEL 3</strong>
+      Engineer
+    </div>
+
+    <div class="level">
+      <strong>LEVEL 4</strong>
+      Inventor
+    </div>
+
+    <div class="level">
+      <strong>LEVEL 5</strong>
+      Nova Engineer
+    </div>
+
+    <div class="level">
+      <strong>LEVEL 6</strong>
+      Forge Master
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="cta">
+
+  <h2>Your next invention is waiting.</h2>
+
+  <p>
+    Join the NovaForge launch list and be first to see new builds.
+  </p>
+
+  <button onclick="openModal()">Join the Waitlist</button>
+
+</div>
+
+
+<footer>
+
+  <div>© 2026 NovaForge</div>
+
+  <div>
+    Build. Test. Upgrade. Invent.
+  </div>
+
+</footer>
+
+
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <h2>Join NovaForge 🚀</h2>
+
+    <p>
+      Enter your email to join the launch list.
+    </p>
+
+    <input type="email" placeholder="Your email">
+
+    <button class="primary" onclick="joinList()">
+      Join
+    </button>
+
+    <br>
+
+    <button class="close" onclick="closeModal()">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function openModal() {
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+function joinList() {
+  alert("You're on the NovaForge launch list! 🚀");
+  closeModal();
+}
+
+</script>
+
+</body>
+</html>
